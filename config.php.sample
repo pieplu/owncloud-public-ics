@@ -1,0 +1,7 @@
+<?php
+
+return array(
+    'host' => 'http://cloud.domains.com',
+    'username' => 'user',
+    'password' => 'pass'
+);
