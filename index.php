@@ -1,4 +1,5 @@
 <?php
+
 // Use "composer require sabre/vobject" to get the required libraries
 require_once('./3rdparty/autoload.php');
 
@@ -10,95 +11,42 @@ $remoteHost = $configs['host'];
 $username = $configs['username'];
 $password = $configs['password'];
 
-$calendarName = 'clbrations';
-
 $calendarsArray = array("clbrations","tudes");
-
+$arrayOfics = array();
 // Get ownCloud calendar
 
-
-
-$curl = curl_init($remoteHost . '/remote.php/caldav/calendars/'.$username.'/'.$calendarName.'?export');
-
-curl_setopt($curl, CURLOPT_USERPWD, $username . ":" . $password);
-
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-
-curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-$ics = curl_exec($curl);
-
-curl_close($curl);
-
-
-
-foreach($calendarsArray as &$value){
-
+foreach($calendarsArray as $value){
   echo $value."<br>";
-
   $curl = curl_init($remoteHost . '/remote.php/caldav/calendars/'.$username.'/'.$value.'?export');
-
   curl_setopt($curl, CURLOPT_USERPWD, $username . ":" . $password);
-
   curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-
   curl_setopt($curl, CURLOPT_VERBOSE, true);
-
-  $value = curl_exec($curl);
-
+  $arrayOfics[$value] = curl_exec($curl);
   curl_close($curl);
-
 }
-
 
 
 $globalVCalendar = new VObject\Component\VCalendar();
 
-
-
-foreach($calendarsArray as $value){
-
+foreach($arrayOfics as $key => $value){
+    echo $value."<br><br>";
       $anCalendar = VObject\Reader::read($value);
 
-      //$nameCalendar = $anCalendar
-
       foreach($anCalendar->VEVENT as $event) {
-var_dump($event);
-echo "<br><br>";
-        //$globalVCalendar->add('VEVENT', $event);
-
+       echo (string)$event->SUMMARY."<br>";
+        $globalVCalendar->add($event);
       }
-
+      file_put_contents('./'.$key.'.ics', $anCalendar->serialize());
 }
 
-
-
-
-
-file_put_contents('./stmarc.ics', $globalVCalendar->serialize());
+file_put_contents('./all.ics', $globalVCalendar->serialize());
 
 
 
 // Parse calendar file
+// $calendar = VObject\Reader::read($ics);
 
-
-
-$calendar = VObject\Reader::read($ics);
-
-
-
-
-
-
-
-// Put the resulting ICS to /var/www/public.ics
-
-
-
-file_put_contents('./public.ics', $calendar->serialize());
-
-
-
-
+// Put the resulting ICS to .public.ics
+// file_put_contents('./public.ics', $calendar->serialize());
 
 ?>
