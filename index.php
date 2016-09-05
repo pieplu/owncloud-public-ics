@@ -15,6 +15,29 @@ $calendarsArray = array("clbrations","tudes");
 $arrayOfics = array();
 // Get ownCloud calendar
 
+$xml = '<?xml version="1.0" encoding="UTF-8"?>
+<D:propfind xmlns:D="DAV:" xmlns:CS="http://calendarserver.org/ns/" xmlns:C="urn:ietf:params:xml:ns:caldav">
+    <D:prop>
+        <D:displayname />
+        <C:calendar-description />
+        <D:owner />
+        <D:current-user-principal />
+    </D:prop>
+</D:propfind>';
+//
+// $curlDav = curl_init($remoteHost . '/remote.php/caldav/calendars/'.$username.'/');
+// curl_setopt($curlDav, CURLOPT_USERPWD, $username . ":" . $password);
+// curl_setopt($curlDav, CURLOPT_CUSTOMREQUEST, 'PROPFIND');
+// curl_setopt($curlDav, CURLOPT_POSTFIELDS, $xml);
+// //CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data;
+// curl_setopt($curlDav, CURLOPT_RETURNTRANSFER, TRUE);
+// curl_setopt($curlDav, CURLOPT_VERBOSE, true);
+// $DAVCal = curl_exec($curlDav);
+// curl_close($curlDav);
+//
+// echo $DAVCal;
+
+
 foreach($calendarsArray as $value){
   echo $value."<br>";
   $curl = curl_init($remoteHost . '/remote.php/caldav/calendars/'.$username.'/'.$value.'?export');
