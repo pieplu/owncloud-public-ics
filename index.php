@@ -45,14 +45,20 @@ foreach($calendarsArrayOfUrl as $value){
 $globalVCalendar = new VObject\Component\VCalendar();
 
 foreach($arrayOfics as $key => $value){
-    echo $value."<br><br>";
+    //echo $value."<br><br>";
+    try {
       $anCalendar = VObject\Reader::read($value);
+    } catch{
 
-      foreach($anCalendar->VEVENT as $event) {
-       echo (string)$event->SUMMARY."<br>";
-        $globalVCalendar->add($event);
+    }
+
+      if((boolean)$anCalendar->VEVENT){
+        foreach($anCalendar->VEVENT as $event) {
+         echo (string)$event->SUMMARY."<br>";
+          $globalVCalendar->add($event);
+        }
+        file_put_contents('./'.$key.'.ics', $anCalendar->serialize());
       }
-      file_put_contents('./'.$key.'.ics', $anCalendar->serialize());
 }
 
 file_put_contents('./all.ics', $globalVCalendar->serialize());
