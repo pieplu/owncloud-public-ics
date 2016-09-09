@@ -1,7 +1,7 @@
 <?php
 
 // Use "composer require sabre/vobject" to get the required libraries
-require_once('./3rdparty/autoload.php');
+require_once('../3rdparty/autoload.php');
 
 use Sabre\VObject;
 
