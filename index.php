@@ -33,7 +33,6 @@ foreach($calendarsArrayOfUrl as $value){
   $curl = curl_init($remoteHost . $value . '?export');
   curl_setopt($curl, CURLOPT_USERPWD, $username . ":" . $password);
   curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($curl, CURLOPT_VERBOSE, true);
   $result = curl_exec($curl);
   if (curl_getinfo($curl, CURLINFO_HTTP_CODE) == 200){
     $arrayOfics[explode("/", $value)[5]] = $result;
@@ -46,7 +45,7 @@ $globalVCalendar = new VObject\Component\VCalendar();
 $globalVCalendar->add('X-WR-CALNAME', $nameGlobalCalendar);
 
 foreach($arrayOfics as $key => $value){
-    echo $key."<br><br>";
+    //echo $key."<br><br>";
     try {
       $anCalendar = VObject\Reader::read($value);
       $anCalendarName = (string)$anCalendar->{'X-WR-CALNAME'};
