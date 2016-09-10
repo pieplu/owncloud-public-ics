@@ -10,8 +10,8 @@ $configs = include('config.php');
 $remoteHost = $configs['host'];
 $username = $configs['username'];
 $password = $configs['password'];
+$nameGlobalCalendar = $configs['globalname'];
 
-$calendarsArray = array("clbrations","tudes");
 $calendarsArrayFromServer = array();
 $calendarsArrayOfUrl = array();
 $arrayOfics = array();
@@ -43,14 +43,16 @@ foreach($calendarsArrayOfUrl as $value){
 
 
 $globalVCalendar = new VObject\Component\VCalendar();
+$globalVCalendar->add('X-WR-CALNAME', $nameGlobalCalendar);
 
 foreach($arrayOfics as $key => $value){
     echo $key."<br><br>";
     try {
       $anCalendar = VObject\Reader::read($value);
-
+      $anCalendarName = (string)$anCalendar->{'X-WR-CALNAME'};
       if((boolean)$anCalendar->VEVENT){
         foreach($anCalendar->VEVENT as $event) {
+          $event->CATEGORIES = $anCalendarName;
           $globalVCalendar->add($event);
         }
       }

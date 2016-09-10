@@ -3,5 +3,6 @@
 return array(
     'host' => 'http://cloud.domains.com',
     'username' => 'user',
-    'password' => 'pass'
+    'password' => 'pass',
+    'globalname' => 'All events'
 );
