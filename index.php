@@ -11,22 +11,10 @@ $remoteHost = $configs['host'];
 $username = $configs['username'];
 $password = $configs['password'];
 $nameGlobalCalendar = $configs['globalname'];
+$calendarsArrayOfUrl = $configs['calendars'];
 
-$calendarsArrayFromServer = array();
-$calendarsArrayOfUrl = array();
 $arrayOfics = array();
 
-// Get ownCloud calendars
-$curlDav = curl_init($remoteHost . '/remote.php/caldav/calendars/'.$username.'/');
-curl_setopt($curlDav, CURLOPT_USERPWD, $username . ":" . $password);
-curl_setopt($curlDav, CURLOPT_CUSTOMREQUEST, 'PROPFIND');
-curl_setopt($curlDav, CURLOPT_RETURNTRANSFER, TRUE);
-$DAVCal = curl_exec($curlDav);
-curl_close($curlDav);
-
-preg_match_all("/(\/remote\.php\/caldav\/calendars\/\w+\/\w+\/)/", $DAVCal, $calendarsArrayFromServer);
-
-$calendarsArrayOfUrl = $calendarsArrayFromServer[0];
 
 
 foreach($calendarsArrayOfUrl as $value){
