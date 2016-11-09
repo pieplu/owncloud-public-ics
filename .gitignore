@@ -2,3 +2,5 @@
 .htaccess
 *.ics
 config.php
+composer*
+vendor

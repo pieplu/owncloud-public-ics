@@ -1,12 +1,13 @@
 <?php
 
+$configs = include('config.php');
+
 // Use "composer require sabre/vobject" to get the required libraries
-require_once('../3rdparty/autoload.php');
+require_once($configs['autoloadPATH']);
 
 use Sabre\VObject;
 
 // Configure your data
-$configs = include('config.php');
 $remoteHost = $configs['host'];
 $username = $configs['username'];
 $password = $configs['password'];

@@ -4,11 +4,12 @@ This script create ics files from all calendar of a owncloud user.
 This is a missing feature of owncloud calendar app.
 
 
-## Installation
+## Installation in owncloud/nextcloud
 
 ```sh
 git clone https://github.com/pieplu/owncloud-public-ics.git nameYouWant
 ```
+
 
 Add a .htaccess file (if you are under apache server)
 
@@ -35,11 +36,19 @@ Create a config.php and edit it
 cp config.php.sample config.php
 ```
 
-## Usage
+### Usage
 
 At each access of `cloud.yourdomains.com/nameYouWant`, ics files will be created on the folder `nameYouWant`
 
 Tips: Use cron to generate this every day/hour.
+
+## DEV Installation
+
+```sh
+composer require sabre/vobject 3.2
+```
+
+Change the autoloadPATH on the config file (normaly: '../3rdparty' to './vendor')
 
 ## Thanks
 
